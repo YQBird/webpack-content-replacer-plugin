@@ -48,5 +48,8 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "winston": "^2.3.1"
+  }
 }
