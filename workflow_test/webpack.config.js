@@ -28,9 +28,26 @@ const cssOptions = {
   ],
 };
 
+const invalidOptions = {
+  modifiedFile: '/somepath',
+}
+
+const noFileOptions = {
+  modifiedFile: '/somepath',
+  modifications: [
+    {
+      regex: /red/g,
+      modification: 'blue',
+    },
+  ],
+}
+
 module.exports = {
   plugins: [
     new ContentReplacer(htmlOptions),
     new ContentReplacer(cssOptions),
   ],
+  errorPlugins: [
+    new ContentReplacer(exceptionOptions),
+    new ContentReplacer(noFileOptions)
 };
