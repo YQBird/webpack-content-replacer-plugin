@@ -1,9 +1,11 @@
 'use strict';
 
 const fs = require('fs');
-const logger = require('./config/logger')('none');
+const logger = require('./config/logger');
 
 const validBuildTrigger = ['after-emit', 'done', 'failed'];
+const exceptLevel = 'log';
+const exceptLogger = logger(exceptLevel);
 
 module.exports = class ContentReplacer {
   constructor(options) {
@@ -20,7 +22,7 @@ module.exports = class ContentReplacer {
       const error = typeof options === 'object'
         ? 'Required parameters are missing'
         : 'Parameters are invalid';
-      logger.warn('Options are invalid');
+      exceptLogger.warn('Options are invalid');
       throw new Error(error);
     }
   }
@@ -60,7 +62,7 @@ module.exports = class ContentReplacer {
 
       return true;
     }
-    logger.warn('No file is found');
+    exceptLogger.warn('No file is found');
     throw new Error('File not found');
   }
 

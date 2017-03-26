@@ -6,6 +6,7 @@ const expect = require('expect.js');
 const webpack = require('webpack');
 const config = require('./../workflow_test/webpack.config.js');
 const reverse = require('./../workflow_test/webpack.config.reverse.js');
+const except = require('./../workflow_test/webpack.config.exception.js');
 
 describe('Webpack workflow test cases', () => {
   afterEach(() => {
@@ -53,6 +54,42 @@ describe('Webpack workflow test cases', () => {
         expect(data.indexOf(value) !== -1).to.equal(true);
       });
       return done();
+    });
+  });
+});
+
+// describe('Exception Handler test case', () => {
+//   it('should return error in log level', (done) => {
+//     webpack(except.invalidOpt, (err, stats) => {
+//       if (err) {
+//         console.log('**********', JSON.stringify(err));
+//         return done(err);
+//       }
+//       if (stats.hasErrors()) {
+//         console.log('**********', JSON.stringify(stats));
+//         return done(new Error(stats.toString()));
+//       }
+//       const log = fs.readFileSync(path.join(__dirname, '../warning.log'));
+//       expect(log).to.not.be.empty();
+//       return stats;
+//     });
+//   });
+// });
+
+describe('Exception Handler test case', () => {
+  it('should return error in log level', (done) => {
+    webpack(except.noFileOpt, (err, stats) => {
+      if (err) {
+        console.log('**********', JSON.stringify(err));
+        return done(err);
+      }
+      if (stats.hasErrors()) {
+        console.log('**********', JSON.stringify(stats));
+        return done(new Error(stats.toString()));
+      }
+      const log = fs.readFileSync(path.join(__dirname, '../warning.log'));
+      expect(log).to.not.be.empty();
+      return stats;
     });
   });
 });
